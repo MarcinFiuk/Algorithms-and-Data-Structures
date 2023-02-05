@@ -4,24 +4,21 @@ Write a function called findLongestSubstring, which accepts a string and returns
 
 function findLongestSubstring(str) {
     let subStr = str[0];
-    let end = 1;
     let length = 0;
 
     if (!str.length) {
         return 0;
     }
 
-    while (end < str.length) {
-        if (subStr.includes(str[end])) {
-            const index = subStr.indexOf(str[end]);
+    for (let i = 1; i < str.length; i++) {
+        if (subStr.includes(str[i])) {
+            const index = subStr.indexOf(str[i]);
             subStr = subStr.slice(index + 1);
         }
 
-        subStr += str[end];
+        subStr += str[i];
 
         length = Math.max(length, subStr.length);
-
-        end++;
     }
 
     return length;
