@@ -19,9 +19,7 @@ function findLongestSubstring(str) {
 
         subStr += str[end];
 
-        if (subStr.length > length) {
-            length = subStr.length;
-        }
+        length = Math.max(length, subStr.length);
 
         end++;
     }
