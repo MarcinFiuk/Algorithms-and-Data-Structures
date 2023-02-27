@@ -155,55 +155,55 @@
 
 //---------------------------------------------
 
-function getDigit(num, place) {
-    const digit = Math.floor((Math.abs(num) / Math.pow(10, place)) % 10);
+// function getDigit(num, place) {
+//     const digit = Math.floor((Math.abs(num) / Math.pow(10, place)) % 10);
 
-    return digit;
-}
+//     return digit;
+// }
 
-// console.log(getDigit(12345, 2));
+// // console.log(getDigit(12345, 2));
 
-function digitCount(num) {
-    if (num === 0) {
-        return 1;
-    }
+// function digitCount(num) {
+//     if (num === 0) {
+//         return 1;
+//     }
 
-    const numOfDigit = Math.floor(Math.log10(Math.abs(num))) + 1;
+//     const numOfDigit = Math.floor(Math.log10(Math.abs(num))) + 1;
 
-    return numOfDigit;
-}
+//     return numOfDigit;
+// }
 
-// console.log(digitCount(12345));
+// // console.log(digitCount(12345));
 
-function getMostDigits(nums) {
-    let maxDigit = 0;
+// function getMostDigits(nums) {
+//     let maxDigit = 0;
 
-    for (let i = 0; i < nums.length; i++) {
-        maxDigit = Math.max(digitCount(nums[i]), maxDigit);
-    }
+//     for (let i = 0; i < nums.length; i++) {
+//         maxDigit = Math.max(digitCount(nums[i]), maxDigit);
+//     }
 
-    return maxDigit;
-}
+//     return maxDigit;
+// }
 
-// console.log(mostDigit([11, 22, 11111, 11, 1]));
+// // console.log(mostDigit([11, 22, 11111, 11, 1]));
 
-function radixSort(arr) {
-    const maxDigitsCount = getMostDigits(arr);
+// function radixSort(arr) {
+//     const maxDigitsCount = getMostDigits(arr);
 
-    for (let i = 0; i < maxDigitsCount; i++) {
-        const bucket = Array.from({ length: 10 }, () => []);
+//     for (let i = 0; i < maxDigitsCount; i++) {
+//         const bucket = Array.from({ length: 10 }, () => []);
 
-        for (let j = 0; j < arr.length; j++) {
-            const digit = getDigit(arr[j], i);
+//         for (let j = 0; j < arr.length; j++) {
+//             const digit = getDigit(arr[j], i);
 
-            bucket[digit].push(arr[j]);
-        }
+//             bucket[digit].push(arr[j]);
+//         }
 
-        arr = bucket.reduce((acc, cur) => acc.concat(cur), []);
-        // arr = [].concat(...bucket);
-    }
+//         arr = bucket.reduce((acc, cur) => acc.concat(cur), []);
+//         // arr = [].concat(...bucket);
+//     }
 
-    return arr;
-}
+//     return arr;
+// }
 
-console.log(radixSort([2, 55, 4, 3, 77, 89, 101, 45, 1000]));
+// console.log(radixSort([2, 55, 4, 3, 77, 89, 101, 45, 1000]));
