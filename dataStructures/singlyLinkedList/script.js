@@ -132,6 +132,53 @@ class SinglyLinkedList {
 
         return true;
     }
+
+    remove(index) {
+        if (index < 0 || index >= this.length) {
+            return;
+        }
+
+        if (index === 0) {
+            return this.shift();
+        }
+
+        if (index === this.length - 1) {
+            return this.pop();
+        }
+
+        const prevNode = this.get(index - 1);
+        const removedNode = prevNode.next;
+        prevNode.next = removedNode.next;
+        removedNode.next = null;
+        return removedNode;
+    }
+
+    reverse() {
+        let current = this.head;
+        this.head = this.tail;
+        this.tail = current;
+        let prev;
+        let next = current.next;
+
+        while (next) {
+            prev = current;
+            current = next;
+            next = next.next;
+            current.next = prev;
+        }
+        this.tail.next = null;
+    }
+
+    // print() {
+    //     const arr = [];
+    //     let current = this.head;
+    //     while (current) {
+    //         arr.push(current.val);
+    //         current = current.next;
+    //     }
+
+    //     console.log(arr);
+    // }
 }
 
 const list = new SinglyLinkedList();
@@ -142,10 +189,3 @@ list.push('how');
 list.push('are');
 list.push('you');
 list.push('!');
-const a = list.insert(0, 'aaa');
-const aa = list.insert(11, 'aaa');
-const aaa = list.insert(7, 'aaa');
-const aaaa = list.insert(3, 'aaa');
-
-console.log('a', list);
-console.log(a, aa, aaa, aaaa);
