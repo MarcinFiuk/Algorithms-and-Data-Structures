@@ -56,9 +56,7 @@ class BinarySearchTree {
 
             if (val > currentNode.val) {
                 currentNode = currentNode.right;
-            }
-
-            if (val < currentNode?.val) {
+            } else if (val < currentNode.val) {
                 currentNode = currentNode.left;
             }
         }
@@ -98,5 +96,5 @@ bst.insert(1);
 bst.insert(64);
 bst.insert(88);
 bst.insert(1);
-const r = bst.find(89);
+const r = bst.find(1);
 console.log(r);
