@@ -41,19 +41,58 @@ class PriorityQueue {
         return ([arr[i1], arr[i2]] = [arr[i2], arr[i1]]);
     }
 
-    dequeue() {}
+    dequeue() {
+        const priorityEl = this.values[0];
+        const lastEl = this.values.pop();
+
+        if (this.values.length) {
+            this.values[0] = lastEl;
+            this.sinkDown();
+        }
+
+        return priorityEl;
+    }
+
+    sinkDown() {
+        let parentIdx = 0;
+        const element = this.values[parentIdx];
+
+        while (true) {
+            let leftIndex = 2 * parentIdx + 1;
+            let rightIndex = 2 * parentIdx + 2;
+            let leftElement = this.values[leftIndex];
+            let rightElement = this.values[rightIndex];
+
+            if (
+                (!rightElement && leftElement?.priority < element.priority) ||
+                (rightElement &&
+                    leftElement?.priority <= rightElement?.priority)
+            ) {
+                this.swap(this.values, leftIndex, parentIdx);
+                parentIdx = leftIndex;
+            } else if (rightElement?.priority < element.priority) {
+                this.swap(this.values, rightIndex, parentIdx);
+                parentIdx = rightIndex;
+            } else {
+                return;
+            }
+        }
+    }
 }
 
 const pQ = new PriorityQueue();
 
+pQ.enqueue(1, 20);
+pQ.enqueue(2, 12);
+pQ.enqueue(3, 13);
+pQ.enqueue(3, 33);
+pQ.enqueue(3, 27);
+pQ.enqueue(3, 2);
+pQ.enqueue(3, 21);
+pQ.enqueue(3, 40);
 console.log('---before---', pQ);
-pQ.enqueue(1, 2);
-pQ.enqueue(2, 3);
-pQ.enqueue(2, 4);
-console.log('middle', pQ);
-pQ.enqueue(2, 1);
-pQ.enqueue(2, 6);
-pQ.enqueue(2, 2);
-pQ.enqueue(2, 5);
-pQ.enqueue(2, 3);
+const returnV = pQ.dequeue();
+
+console.log(returnV);
+
 console.log('---after---', pQ);
