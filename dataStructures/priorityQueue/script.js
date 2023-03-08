@@ -64,8 +64,8 @@ class PriorityQueue {
             let rightElement = this.values[rightIndex];
 
             if (
-                (!rightElement && leftElement?.priority < element.priority) ||
-                (rightElement &&
+                leftElement?.priority < element.priority &&
+                (!rightElement ||
                     leftElement?.priority <= rightElement?.priority)
             ) {
                 this.swap(this.values, leftIndex, parentIdx);
@@ -90,9 +90,25 @@ pQ.enqueue(3, 27);
 pQ.enqueue(3, 2);
 pQ.enqueue(3, 21);
 pQ.enqueue(3, 40);
+pQ.enqueue(3, 54);
+pQ.enqueue(3, 12);
 console.log('---before---', pQ);
-const returnV = pQ.dequeue();
-
+let returnV = pQ.dequeue();
 console.log(returnV);
-
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
+returnV = pQ.dequeue();
+console.log(returnV);
 console.log('---after---', pQ);
