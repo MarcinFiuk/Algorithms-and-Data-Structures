@@ -17,10 +17,12 @@ class Graph {
 
     removeVertex(vertex) {
         const length = this.adjacencyList[vertex].length;
+
         for (let i = 0; i < length; i++) {
-            // console.log(vertex, this.adjacencyList[vertex][i]);
-            this.removeEdge(vertex, this.adjacencyList[vertex][i]);
+            this.removeEdge(vertex, this.adjacencyList[vertex][0]);
         }
+
+        delete this.adjacencyList[vertex];
     }
 
     addEdge(vertex1, vertex2) {
@@ -29,25 +31,57 @@ class Graph {
     }
 
     removeEdge(vertex1, vertex2) {
-        // console.log(this.adjacencyList[vertex1]);
         this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(
             (edge) => edge !== vertex2
         );
-        // console.log(this.adjacencyList[vertex2]);
         this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(
             (edge) => edge !== vertex1
         );
+    }
+
+    DFTraversal(start) {
+        const result = [];
+        const visited = {};
+        const adjacencyList = this.adjacencyList;
+
+        function DFTRecursiveHelper(vertex) {
+            if (!vertex) {
+                return;
+            }
+
+            result.push(vertex);
+            visited[vertex] = true;
+
+            adjacencyList[vertex].forEach((neighbor) => {
+                if (!visited[neighbor]) {
+                    return DFTRecursiveHelper(neighbor);
+                }
+            });
+        }
+
+        DFTRecursiveHelper(start);
+
+        return result;
     }
 }
 
 const g = new Graph();
 
-g.addVertex('Tokyo');
-g.addVertex('Dallas');
-g.addVertex('Aspen');
+g.addVertex('A');
+g.addVertex('B');
+g.addVertex('C');
+g.addVertex('D');
+g.addVertex('E');
+g.addVertex('F');
 
-g.addEdge('Tokyo', 'Dallas');
-g.addEdge('Tokyo', 'Aspen');
-// console.log(g);
-g.removeVertex('Tokyo');
+g.addEdge('A', 'B');
+g.addEdge('A', 'C');
+g.addEdge('B', 'D');
+g.addEdge('C', 'E');
+g.addEdge('D', 'E');
+g.addEdge('D', 'F');
+g.addEdge('E', 'F');
+
 console.log(g);
+const res = g.DFTraversal('A');
+console.log(res);
