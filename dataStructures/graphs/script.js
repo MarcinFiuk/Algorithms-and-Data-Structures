@@ -40,6 +40,7 @@ class Graph {
     }
 
     DFTraversal(start) {
+        //recursion
         const result = [];
         const visited = {};
         const adjacencyList = this.adjacencyList;
@@ -63,6 +64,51 @@ class Graph {
 
         return result;
     }
+
+    DFTraversal2(start) {
+        const stack = [start];
+        const result = [];
+        const visited = {};
+        let vertex = null;
+        visited[start] = true;
+
+        while (stack.length) {
+            vertex = stack.pop();
+            result.push(vertex);
+
+            this.adjacencyList[vertex].forEach((el) => {
+                if (!visited[el]) {
+                    visited[el] = true;
+                    stack.push(el);
+                }
+            });
+        }
+
+        return result;
+    }
+
+    BFTraversal(start) {
+        const queue = [start];
+        const result = [];
+        const visited = {};
+        let vertex = null;
+
+        visited[start] = true;
+
+        while (queue.length) {
+            vertex = queue.shift();
+            result.push(vertex);
+
+            this.adjacencyList[vertex].forEach((neighbor) => {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.push(neighbor);
+                }
+            });
+        }
+
+        return result;
+    }
 }
 
 const g = new Graph();
@@ -82,6 +128,12 @@ g.addEdge('D', 'E');
 g.addEdge('D', 'F');
 g.addEdge('E', 'F');
 
-console.log(g);
+// console.log(g);
 const res = g.DFTraversal('A');
 console.log(res);
+
+const r2 = g.DFTraversal2('A');
+console.log(r2);
+
+const r3 = g.BFTraversal('A');
+console.log(r3);
