@@ -40,8 +40,10 @@ class WeightedGraph {
         const distances = {};
         const previous = {};
         let currentVertex = null;
+        let last = null;
+        const shortestPath = [];
 
-        Object.keys(this.adjacencyList).map((key) => {
+        for (const key in this.adjacencyList) {
             if (key === start) {
                 distances[key] = 0;
                 PQueue.enqueue(key, 0);
@@ -50,39 +52,39 @@ class WeightedGraph {
                 PQueue.enqueue(key, Infinity);
             }
             previous[key] = null;
-        });
+        }
 
         while (PQueue.values.length) {
             currentVertex = PQueue.dequeue().val;
 
             if (currentVertex === end) {
-                return;
+                last = end;
+                while (last) {
+                    shortestPath.push(last);
+                    last = previous[last];
+                }
+
+                return shortestPath.reverse();
             }
 
             this.adjacencyList[currentVertex].forEach((neighbor) => {
                 const { node, weight } = neighbor;
-                let tempDistance;
-                console.log(distances);
-                console.log(distances[node]);
-                //NOTE:doesn't add the whole path only count current
-                //NOTE: there is no track of visited to it check the old vertexes
-                if (distances[node] === Infinity) {
-                    tempDistance = weight;
-                } else {
-                    tempDistance = distances[node] + weight;
-                }
-
+                const tempDistance = distances[currentVertex] + weight;
                 if (tempDistance < distances[node]) {
                     distances[node] = tempDistance;
-                    previous[currentVertex] = node;
+                    previous[node] = currentVertex;
                     PQueue.enqueue(node, tempDistance);
                 }
+                // console.log(tempDistance);
+                /**
+ * let alt = distances[currNode] + neighbor.weight;
+         if (alt < distances[neighbor.node]) {
+            distances[neighbor.node] = alt;
+            prev[neighbor.node] = currNode;
+            pq.enqueue(neighbor.node, distances[neighbor.node]);
+ */
             });
         }
-
-        console.log('d', distances);
-        console.log(PQueue);
-        console.log(previous);
     }
 }
 
@@ -104,4 +106,6 @@ g.addEdge('D', 'E', 3);
 g.addEdge('D', 'F', 1);
 g.addEdge('E', 'F', 1);
 // console.log(g.adjacencyList);
-g.dijkstra('A', 'E');
+const r = g.dijkstra('A', 'E');
+
+console.log(r);
